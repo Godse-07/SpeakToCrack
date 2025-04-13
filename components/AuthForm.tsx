@@ -1,19 +1,45 @@
-"use client"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import { z } from "zod"
-import { Button } from "@/components/ui/button"
+// "use client"
+// import { zodResolver } from "@hookform/resolvers/zod"
+// import { useForm } from "react-hook-form"
+// import { z } from "zod"
+// import { Button } from "@/components/ui/button"
+// import {
+//   Form,
+//   FormDescription
+// } from "@/components/ui/form"
+// import { Input } from "@/components/ui/input"
+// import Image from "next/image"
+// import Link from "next/link"
+// import { toast } from "sonner"
+// import { log } from "console"
+// import FormField from "./FormField"
+// import { useRouter } from "next/navigation"
+// import { createUserWithEmailAndPassword } from "firebase/auth";
+// import { auth } from "@/firebase/client"
+// import { signIn, signUp } from "@/lib/actions/auth.actions"
+
+"use client";
+
+import { z } from "zod";
+import Link from "next/link";
+import Image from "next/image";
+import { toast } from "sonner";
+import { auth } from "@/firebase/client";
+import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
+import { zodResolver } from "@hookform/resolvers/zod";
+
 import {
-  Form,
-  FormDescription
-} from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import Image from "next/image"
-import Link from "next/link"
-import { toast } from "sonner"
-import { log } from "console"
-import FormField from "./FormField"
-import { useRouter } from "next/navigation"
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
+
+import { Form, FormDescription } from "@/components/ui/form";
+import { Button } from "@/components/ui/button";
+
+import FormField from "./FormField";
+import { signIn, signUp } from "@/lib/actions/auth.actions";
+
 
 
 const authFormSchema = (type: FormType) => {
@@ -41,13 +67,35 @@ function AuthForm({type}: {type: FormType}) {
       })
      
       // 2. Define a submit handler.
-      function onSubmit(values: z.infer<typeof formSchema>) {
+      async function onSubmit(values: z.infer<typeof formSchema>) {
         try{
             if(type ==='sign-up'){
+                const { name, email, password} = values;
+                const userCredentials = await createUserWithEmailAndPassword(auth, email, password);
+                const result = await signUp({
+                    uid: userCredentials.user.uid,
+                    name: name!,
+                    email: email,
+                    password: password,
+                })
+                if(!result?.success) {
+                    toast.error(result?.message);
+                    return;
+                }
                 toast.success("Account created successfully. Please sign in")
                 console.log('SIGN up', values);
                 rounter.push("/sign-in")
             }else{
+                const { email, password} = values;
+                const userCredentials = await signInWithEmailAndPassword(auth, email, password);
+                const idToken = await userCredentials.user.getIdToken();
+                if(!idToken){
+                    toast.error("Sign in falied")
+                    return;
+                }
+                await signIn({
+                    email, idToken
+                })
                 toast.success("Logged in successfully")
                 console.log('SIGN in', values);
                 rounter.push("/")
