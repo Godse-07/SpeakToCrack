@@ -1,30 +1,9 @@
-// "use client"
-// import { zodResolver } from "@hookform/resolvers/zod"
-// import { useForm } from "react-hook-form"
-// import { z } from "zod"
-// import { Button } from "@/components/ui/button"
-// import {
-//   Form,
-//   FormDescription
-// } from "@/components/ui/form"
-// import { Input } from "@/components/ui/input"
-// import Image from "next/image"
-// import Link from "next/link"
-// import { toast } from "sonner"
-// import { log } from "console"
-// import FormField from "./FormField"
-// import { useRouter } from "next/navigation"
-// import { createUserWithEmailAndPassword } from "firebase/auth";
-// import { auth } from "@/firebase/client"
-// import { signIn, signUp } from "@/lib/actions/auth.actions"
-
 "use client";
 
 import { z } from "zod";
 import Link from "next/link";
 import Image from "next/image";
 import { toast } from "sonner";
-import { auth } from "@/firebase/client";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -39,6 +18,7 @@ import { Button } from "@/components/ui/button";
 
 import FormField from "./FormField";
 import { signIn, signUp } from "@/lib/actions/auth.actions";
+import { auth } from "@/firebase/client";
 
 
 
