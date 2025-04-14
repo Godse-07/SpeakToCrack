@@ -1,4 +1,4 @@
-import { isAuthenticated } from '@/lib/actions/auth.actions'
+import { isAuthenticated, signOut } from '@/lib/actions/auth.actions'
 import Image from 'next/image'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
@@ -11,11 +11,19 @@ const RootLayout =async ({children}: {children: ReactNode}) => {
   }
   return (
     <div className='root-layout'>
-      <nav>
+      <nav className='flex justify-between'>
         <Link href="/" className='flex gap-2 items-center'>
           <Image src={"/logo.svg"} alt="logo" height={32} width={38}/>
           <h2 className='text-primary-100'>SpeakToCrack</h2>
         </Link>
+        {
+          isUserAuthenticated ? (
+            
+              <button onClick={signOut} className='btn-secondary'>Log Out</button>
+          ) : (
+            <Link href="/sign-in" className='btn-primary'>Sign In</Link>
+          )
+        }
       </nav>
       {children}
     </div>
