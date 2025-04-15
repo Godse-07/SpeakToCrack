@@ -115,6 +115,14 @@ NEXT_PUBLIC_VAPI_WORKFLOW_ID=
 ```
 ## 🧰 Tech Stack
 
-**Client:** Next.js, TypeScript, Tailwind CSS, Zod
-**Database & Authentication:** Firebase  
-**Voice Interaction:** Vapi SDK
+### **Client**  
+- **Next.js**  
+- **TypeScript**  
+- **Tailwind CSS**  
+- **Zod**  
+
+### **Database & Authentication**  
+- **Firebase**  
+
+### **Voice Interaction**  
+- **Vapi SDK**  
