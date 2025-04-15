@@ -17,12 +17,16 @@ const InterviewCard = async ({
   techstack,
   createdAt,
 }: InterviewCardProps) => {
+  // Get the current logged-in user
+  const currentUser = await getCurrentUser();
+  const currentUserId = currentUser?.id;
 
+  // Only check for feedback if the current user is the one who needs to see it
   const feedback =
-    userId && id
+    currentUserId && id
       ? await getFeedbackByInterviewId({
           interviewId: id,
-          userId,
+          userId: currentUserId, // Use the current user's ID instead of the interview's creator ID
         })
       : null;
 
@@ -38,6 +42,9 @@ const InterviewCard = async ({
   const formattedDate = dayjs(
     feedback?.createdAt || createdAt || Date.now()
   ).format("MMM D, YYYY");
+
+  // Determine if the current user has feedback for this interview
+  const hasUserFeedback = !!feedback;
 
   return (
     <div className="card-border w-[360px] max-sm:w-full min-h-96">
@@ -79,14 +86,15 @@ const InterviewCard = async ({
 
             <div className="flex flex-row gap-2 items-center">
               <Image src="/star.svg" width={22} height={22} alt="star" />
-              <p>{feedback?.totalScore || "---"}/100</p>
+              <p>{hasUserFeedback ? `${feedback.totalScore}/100` : "---/100"}</p>
             </div>
           </div>
 
           {/* Feedback or Placeholder Text */}
           <p className="line-clamp-2 mt-5">
-            {feedback?.finalAssessment ||
-              "You haven't taken this interview yet. Take it now to improve your skills."}
+            {hasUserFeedback
+              ? feedback.finalAssessment
+              : "You haven't taken this interview yet. Take it now to improve your skills."}
           </p>
         </div>
 
@@ -96,12 +104,12 @@ const InterviewCard = async ({
           <Button className="btn-primary">
             <Link
               href={
-                feedback
+                hasUserFeedback
                   ? `/interview/${id}/feedback`
                   : `/interview/${id}`
               }
             >
-              {feedback ? "Check Feedback" : "View Interview"}
+              {hasUserFeedback ? "Check Feedback" : "View Interview"}
             </Link>
           </Button>
         </div>

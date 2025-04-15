@@ -79,7 +79,6 @@ export async function getFeedbackByInterviewId(
     .get();
 
   if (querySnapshot.empty) {
-    console.log("No feedback found for: Inteview Id", interviewId, "User id: ",userId);
     return null;
   }
 
