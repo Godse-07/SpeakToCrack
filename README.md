@@ -47,8 +47,14 @@ SpeakToCrack is an AI-driven mock interview platform designed to help users prep
 
 ## Screenshots
 
-1
-2
+<p align="center">
+  <img src="https://raw.githubusercontent.com/Godse-07/SpeakToCrack/refs/heads/master/public/One.png" width="300" height="auto" style="margin: 10px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);" />
+  <img src="https://raw.githubusercontent.com/Godse-07/SpeakToCrack/refs/heads/master/public/Two.png" width="300" height="auto" style="margin: 10px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);" />
+  <img src="https://raw.githubusercontent.com/Godse-07/SpeakToCrack/refs/heads/master/public/Three.png" width="300" height="auto" style="margin: 10px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);" />
+  <img src="https://raw.githubusercontent.com/Godse-07/SpeakToCrack/refs/heads/master/public/Four.png" width="300" height="auto" style="margin: 10px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);" />
+</p>
+
+
 # Run Locally
 
 ## 🛠️ Run Locally
