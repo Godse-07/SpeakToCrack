@@ -48,7 +48,6 @@ interface InterviewCardProps {
   hasFeedback?: boolean; 
 }
 
-
 interface AgentProps {
   userName: string;
   userId?: string;

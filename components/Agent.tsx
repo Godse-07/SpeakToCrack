@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils";
 import { vapi } from "@/lib/vapi.sdk";
 import { interviewer } from "@/constants";
 import { toast } from "sonner";
+import { createFeedback } from "@/lib/actions/general.action";
 
 enum CallStatus {
   INACTIVE = "INACTIVE",
@@ -223,43 +224,3 @@ const Agent = ({
 
 export default Agent;
 
-async function createFeedback({
-  interviewId,
-  userId,
-  transcript,
-  feedbackId,
-}: {
-  interviewId: string;
-  userId: string;
-  transcript: SavedMessage[];
-  feedbackId: string | undefined;
-}): Promise<{ success: boolean; feedbackId: string | null }> {
-  try {
-    const res = await fetch("/api/feedback", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        interviewId,
-        userId,
-        transcript,
-        feedbackId,
-      }),
-    });
-
-    if (!res.ok) throw new Error("Failed to create feedback");
-
-    const data = await res.json();
-    return {
-      success: data.success,
-      feedbackId: data.feedbackId ?? null,
-    };
-  } catch (err) {
-    console.error("Feedback creation failed:", err);
-    return {
-      success: false,
-      feedbackId: null,
-    };
-  }
-}

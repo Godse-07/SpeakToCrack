@@ -62,19 +62,19 @@ const page = async () => {
       <section className="flex flex-col gap-6 mt-8">
         <h2>Take an Interviews</h2>
         <div className="interviews-section">
-          {hasUpcomingInterviews ? (
-            latestInterview?.map((interview) => (
+            {hasUpcomingInterviews ? (
+            latestInterview?.map((interview: Interview) => (
               <InterviewCard {...interview} key={interview.id} />
             ))
-          ) : (
+            ) : (
             <p className="text-lg">
               There is no upcoming interviews available.
               <Link href="/interview" className="text-blue-500">
-                {" "}
-                Start Practicing
+              {" "}
+              Start Practicing
               </Link>
             </p>
-          )}
+            )}
         </div>
       </section>
     </>

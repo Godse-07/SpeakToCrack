@@ -79,13 +79,12 @@ export async function getFeedbackByInterviewId(
     .get();
 
   if (querySnapshot.empty) {
-    console.log("No feedback found for:", interviewId, userId);
+    console.log("No feedback found for: Inteview Id", interviewId, "User id: ",userId);
     return null;
   }
 
   const feedbackDoc = querySnapshot.docs[0];
   const data = feedbackDoc.data();
-  console.log("Fetched feedback:", data);
 
   return { id: feedbackDoc.id, ...data } as Feedback;
 }

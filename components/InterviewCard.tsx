@@ -7,6 +7,7 @@ import DisplayTechIcons from "./DisplayTechIcons";
 
 import { cn, getRandomInterviewCover } from "@/lib/utils";
 import { getFeedbackByInterviewId } from "@/lib/actions/general.action";
+import { getCurrentUser } from "@/lib/actions/auth.actions";
 
 const InterviewCard = async ({
   id,
@@ -16,6 +17,7 @@ const InterviewCard = async ({
   techstack,
   createdAt,
 }: InterviewCardProps) => {
+
   const feedback =
     userId && id
       ? await getFeedbackByInterviewId({
