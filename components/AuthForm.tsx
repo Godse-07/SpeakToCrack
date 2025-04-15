@@ -63,7 +63,6 @@ function AuthForm({type}: {type: FormType}) {
                     return;
                 }
                 toast.success("Account created successfully. Please sign in")
-                console.log('SIGN up', values);
                 rounter.push("/sign-in")
             }else{
                 const { email, password} = values;
@@ -77,7 +76,6 @@ function AuthForm({type}: {type: FormType}) {
                     email, idToken
                 })
                 toast.success("Logged in successfully")
-                console.log('SIGN in', values);
                 rounter.push("/")
             }
         }catch (error){
