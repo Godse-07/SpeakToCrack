@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { vapi } from "@/lib/vapi.sdk";
 import { interviewer } from "@/constants";
+import { toast } from "sonner";
 
 enum CallStatus {
   INACTIVE = "INACTIVE",
@@ -97,11 +98,11 @@ const Agent = ({
       });
 
       if (success && id) {
-        // router.push(`/interview/${interviewId}/feedback`);
-        console.log("Feedback saved successfully", id);
+        router.push(`/interview/${interviewId}/feedback`);
+        toast.success("Feedback saved successfully");
       } else {
-        console.log("Error saving feedback");
         router.push("/");
+        toast.error("Error saving feedback. Please try again.");
       }
     };
 
@@ -222,6 +223,43 @@ const Agent = ({
 
 export default Agent;
 
-function createFeedback(arg0: { interviewId: string; userId: string; transcript: SavedMessage[]; feedbackId: string | undefined; }): { success: any; feedbackId: any; } | PromiseLike<{ success: any; feedbackId: any; }> {
-  throw new Error("Function not implemented.");
+async function createFeedback({
+  interviewId,
+  userId,
+  transcript,
+  feedbackId,
+}: {
+  interviewId: string;
+  userId: string;
+  transcript: SavedMessage[];
+  feedbackId: string | undefined;
+}): Promise<{ success: boolean; feedbackId: string | null }> {
+  try {
+    const res = await fetch("/api/feedback", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        interviewId,
+        userId,
+        transcript,
+        feedbackId,
+      }),
+    });
+
+    if (!res.ok) throw new Error("Failed to create feedback");
+
+    const data = await res.json();
+    return {
+      success: data.success,
+      feedbackId: data.feedbackId ?? null,
+    };
+  } catch (err) {
+    console.error("Feedback creation failed:", err);
+    return {
+      success: false,
+      feedbackId: null,
+    };
+  }
 }
